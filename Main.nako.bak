@@ -1,0 +1,90 @@
+# Contactless IC Reader In Language of Your's Library
+# (あなたの言語による非接触ICリーダーライブラリ)
+#
+# 通称: CIRILY Library (元ネタ:Proje●t DI●A Xのモジュール)
+#
+
+# マクロ定義
+POLLING_ANYとは整数
+POLLING_ANY = $ffff
+POLLING_EDYとは整数
+POLLING_EDY = $fe00
+POLLING_SUICAとは整数
+POLLING_SUICA = $0003
+MAX_SYSTEM_CODE=8
+SERVICE_SUICA_HISTORYとは整数
+SERVICE_SUICA_HISTORY=$090f
+BLOCKとは整数
+BLOCK = 0
+# マクロ定義終わり
+
+# DLLファイルとなでしこの命令をつなぎ合わせる接着剤
+●pasori_open(dummy) =DLL("felicalib.dll","pasori* pasori_open (char* dummy)")
+●pasori_close (p) =DLL("felicalib.dll","void* pasori_close (pasori *p)")
+●pasori_init(p) =DLL("felicalib.dll","int* pasori_init (pasori* p)")
+●felica_polling(p, systemcode, RFU, timeslot) =DLL("felicalib.dll","felica* felica_polling (pasori* p, uint16* systemcode, uint8* RFU, uint8* timeslot)")
+●felica_free (p) =DLL("felicalib.dll","void* felica_free (felica *p)")
+●felica_getidm (f,{参照渡し}buf) =DLL("felicalib.dll","void* felica_getidm (felica *f, uint8 *buf)")
+●felica_getpmm (f,{参照渡し}buf) =DLL("felicalib.dll","void* felica_getpmm (felica *f, uint8 *buf)")
+●felica_read_without_encryption02(f, servicecode, mode, addr,{参照渡し}data) =DLL("felicalib.dll","int* felica_read_without_encryption02 (felica *f, int *servicecode, int *mode, uint8 *addr, uint8 *data)")
+
+
+# DLLファイルとなでしこの命令をつなぎ合わせる接着剤終わり
+
+# 命令の日本語化
+●PaSoRi開く 
+	pasori_open(H)
+●PaSoRi閉じる(PSR_HNDLで|PSR_HNDLを|PSR_HNDLの)
+	pasori_close(PSR_HNDL)
+●PaSoRi初期化(PSR_HNDLで|PSR_HNDLを|PSR_HNDLの)
+	pasori_init(PSR_HNDL)
+	もし、それが「0」ならば
+	　　「成功」で戻る
+	違えば
+	　　「失敗」で「PaSoRiの初期化に失敗しました」の警告ダイアログ表示
+●Felica取得(TYPEのPSR_HNDLで|TYPEのPSR_HNDLを|TYPEのPSR_HNDLの)
+	felica_polling(PSR_HNDL, TYPE , 0, 0)
+	もし、それが「0」ならば #カードが無い時に
+		「失敗」で「Felicaの読み込みに失敗しました」の警告ダイアログ表示
+●Felica解放(FLC_HNDLで|FLC_HNDLを|FLC_HNDLの)
+	felica_free(FLC_HNDL)
+●Felica製造ID取得(FLC_HNDLで|FLC_HNDLを|FLC_HNDLの)
+	BUFに8を確保
+	felica_getidm (FLC_HNDL, BUF)
+	BUFをバイナリダンプして「,」を「」へ正規表現置換
+	それで戻る
+●Felica製造パラメータ取得(FLC_HNDLで|FLC_HNDLを|FLC_HNDLの)
+	BUFに8を確保
+	felica_getpmm (FLC_HNDL, BUF)
+	BUFをバイナリダンプして「,」を「」へ正規表現置換
+	それで戻る
+●Felica非暗号化塊読み込み(NUMのTYPEをFLC_HNDLで|NUMのTYPEのFLC_HNDLを|NUMのTYPEをFLC_HNDLを|NUMのTYPEをFLC_HNDLの)
+	dataに16を確保
+	felica_read_without_encryption02(FLC_HNDL, TYPE, 0, NUM, data)
+	もし、それが「-1」ならば
+		「失敗」で「Felicaのブロック読み込みに失敗しました」の警告ダイアログ表示
+		戻る
+	dataをバイナリダンプして、それで戻る
+# 命令の日本語化終わり
+　　
+
+母艦は「Felica Reader for Nadesiko」
+
+PaSoRi開く
+それをハンドル番号に代入
+ハンドル番号を言う
+ハンドル番号でPaSoRi初期化
+それを言う
+POLLING_SUICAのハンドル番号をFelica取得
+Felica番号にそれを代入
+もし、Felica番号=0ならば
+	「失敗」で「Felicaカードを認識できませんでした」の警告ダイアログ表示
+	終了
+Felica番号を言う #この返り値がFelicaのハンドル番号
+Felica番号をFelica製造ID取得
+「IDm:{それ}」を表示
+Felica番号をFelica製造パラメータ取得
+「PMm:{それ}」を表示
+0のSERVICE_SUICA_HISTORYをFelica番号でFelica非暗号化塊読み込み
+それを表示
+pasori_close (ハンドル番号)
