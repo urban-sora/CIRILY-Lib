@@ -30,15 +30,13 @@ SERVICE_SUICA_HISTORY=$090f
 # DLLファイルとなでしこの命令をつなぎ合わせる接着剤終わり
 
 # 命令の日本語化
-●PaSoRi開く 
+●PaSoRi開く  
 	pasori_open(H)
 ●PaSoRi閉じる(PSR_HNDLで|PSR_HNDLを|PSR_HNDLの)
 	pasori_close(PSR_HNDL)
 ●PaSoRi初期化(PSR_HNDLで|PSR_HNDLを|PSR_HNDLの)
 	pasori_init(PSR_HNDL)
-	もし、それが「0」ならば
-	　　「成功」で戻る
-	違えば
+	もし、それが「-1」ならば
 	　　「失敗」で「PaSoRiの初期化に失敗しました」の警告ダイアログ表示
 ●Felica取得(TYPEのPSR_HNDLで|TYPEのPSR_HNDLを|TYPEのPSR_HNDLの)
 	felica_polling(PSR_HNDL, TYPE , 0, 0)
@@ -56,7 +54,7 @@ SERVICE_SUICA_HISTORY=$090f
 	felica_getpmm (FLC_HNDL, BUF)
 	BUFをバイナリダンプして「,」を「」へ正規表現置換
 	それで戻る
-●Felica非暗号化塊読み込み(NUMのTYPEをFLC_HNDLで|NUMのTYPEのFLC_HNDLを|NUMのTYPEをFLC_HNDLを|NUMのTYPEをFLC_HNDLの)
+●Felica非暗号化塊読み込み(NUMのTYPEをFLC_HNDLで|NUMのTYPEをFLC_HNDLを|NUMのTYPEをFLC_HNDLの)
 	dataに16を確保
 	felica_read_without_encryption02(FLC_HNDL, TYPE, 0, NUM, data)
 	もし、それが「-1」ならば
