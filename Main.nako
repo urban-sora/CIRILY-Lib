@@ -1,8 +1,9 @@
-# Contactless IC Reader In Language of Your's Library
+# Contactless IC Reader In Language of Your's Library (a.k.a Wrapper)
 # (あなたの言語による非接触ICリーダーライブラリ)
 #
+# やってること : なでしことFelicaLibのラッパー
 # 通称: CIRILY Library (元ネタ:Proje●t DI●A Xのモジュール)
-#
+# 
 
 # マクロ定義
 POLLING_ANYとは整数
@@ -41,7 +42,8 @@ SERVICE_SUICA_HISTORY=$090f
 ●Felica取得(TYPEのPSR_HNDLで|TYPEのPSR_HNDLを|TYPEのPSR_HNDLの)
 	felica_polling(PSR_HNDL, TYPE , 0, 0)
 	もし、それが「0」ならば #カードが無い時に
-		「失敗」で「Felicaの読み込みに失敗しました」の警告ダイアログ表示
+		0.5秒待つ
+		TYPEのPSR_HNDLでFelica取得　# 
 ●Felica解放(FLC_HNDLで|FLC_HNDLを|FLC_HNDLの)
 	felica_free(FLC_HNDL)
 ●Felica製造ID取得(FLC_HNDLで|FLC_HNDLを|FLC_HNDLの)
@@ -82,5 +84,9 @@ Felica番号をFelica製造ID取得
 Felica番号をFelica製造パラメータ取得
 「PMm:{それ}」を表示
 0のSERVICE_SUICA_HISTORYをFelica番号でFelica非暗号化塊読み込み
+それを表示
+1のSERVICE_SUICA_HISTORYをFelica番号でFelica非暗号化塊読み込み
+それを表示
+2のSERVICE_SUICA_HISTORYをFelica番号でFelica非暗号化塊読み込み
 それを表示
 pasori_close (ハンドル番号)
