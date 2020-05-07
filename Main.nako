@@ -65,6 +65,11 @@ SERVICE_SUICA_HISTORY=$090f
 	dataをバイナリダンプして、それで戻る
 # 命令の日本語化終わり
 　　
+#
+# これより下は個人のテスト用データなので削除して使用する事
+# 面倒だから消していません。0.2 Alpha中に消しておきます。
+#
+
 
 母艦は「Felica Reader for Nadesiko」
 
