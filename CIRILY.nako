@@ -55,15 +55,13 @@ SERVICE_EDY_HISTORY=$1317
 　　PaSoRiチェック
 	pasori_init(PaSoRiハンドル)
 	もし、それが「-1」ならば
-	　　「PaSoRiの初期化に失敗しました」でエラー発生
+	　　「PaSoRiの初期化に失敗しました (初期化エラー)」でエラー発生
 　・Felica取得(TYPEの)～
 	PaSoRiチェック
-	PSL=PaSoRiハンドル
 	felica_polling(PaSoRiハンドル, TYPE , 0, 0)
 	もし、それが「0」ならば #カードが無い時に
-		0.5秒待つ
-		TYPEのFelica取得　# 
-	Felicaハンドル=それ
+		「Felicaの取得に失敗しました」でエラー発生
+	Felicaハンドル=それ #カードがあればFelicaハンドルに代入する
 　・Felica解放～
 	Felicaチェック
 	felica_free(Felicaハンドル)
