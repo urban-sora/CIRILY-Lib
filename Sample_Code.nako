@@ -7,6 +7,8 @@
 
 !「CIRILY.nako」を取り込む
 
+
+
 「Contactless IC Reader In Language of Your's Library TEST APPLICATION{改行}」を表示
 
 # CIRILYを取り込むと、ICカードという部品が追加されます。
@@ -19,6 +21,8 @@
 # 次にPaSoRiを必ず初期化する。じゃないとFelicaを読みません。
 読取機からPaSoRi初期化
 
+仮強とは文字列
+
 # 以下Felica関連の読み取り
 読取機からPOLLING_ANYのFelica取得
 読取機からFelica製造ID取得
@@ -26,11 +30,17 @@
 読取機からFelica製造パラメータ取得
 「FelicaのPMm: {それ}」を表示
 読取機から0のSERVICE_SUICA_HISTORYをFelica非暗号化塊読み込み
-「Felicaの第一非暗号化ブロック : {それ}」を表示
+「Felicaの第一非暗号化ブロック : {それ}{改行}」を表示
 
 # 実は部品内にハンドルとかが保管されている (通常の実行時に意識する必要はないが) ので、必要ならば呼び出せる事は呼び出せる...
 「PaSoRiハンドル番号 : {読取機のPaSoRiハンドル} 」を表示
-「Felicaハンドル番号 : {読取機のFelicaハンドル} 」を表示
+「Felicaハンドル番号 : {読取機のFelicaハンドル} {改行}」を表示
+
+「{改行}」を表示
+
+# Suicaの残高読み取り
+読取機から0のSuica残高読み込み
+「Suicaの最新の残高 : {それ}円」を表示
 
 # 終わったらきちんと解放してあげよう。
 読取機からFelica解放
