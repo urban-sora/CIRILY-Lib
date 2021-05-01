@@ -21,10 +21,10 @@
 # 次にPaSoRiを必ず初期化する。じゃないとFelicaを読みません。
 読取機からPaSoRi初期化
 
-仮強とは文字列
+#仮強とは文字列
 
 # 以下Felica関連の読み取り
-読取機からPOLLING_ANYのFelica取得
+読取機からPOLLING_SUICAのFelica取得
 読取機からFelica製造ID取得
 「FelicaのIDm: {それ}」を表示
 読取機からFelica製造パラメータ取得

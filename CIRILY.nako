@@ -12,6 +12,8 @@ POLLING_EDYとは整数
 POLLING_EDY = $fe00
 POLLING_SUICAとは整数
 POLLING_SUICA = $0003
+POLLING_WAONとは整数
+POLLING_WAON = $00fe
 MAX_SYSTEM_CODE=8
 SERVICE_SUICA_HISTORYとは整数
 SERVICE_SUICA_HISTORY=$090f
@@ -19,6 +21,8 @@ SERVICE_NANACO_HISTORYとは整数
 SERVICE_NANACO_HISTORY=$558b
 SERVICE_EDY_HISTORYとは整数
 SERVICE_EDY_HISTORY=$1317
+SERVICE_WAON_CODEとは整数
+SERVICE_WAON_CODE=$67cf
 # マクロ定義終わり
 
 # どうしても16→10進数変換で$が使えなかったから、五十六さんの「進数変換セット」を読み込み
@@ -47,7 +51,6 @@ SERVICE_EDY_HISTORY=$1317
 ●felica_getidm (f,{参照渡し}buf) =DLL("felicalib.dll","void* felica_getidm (felica *f, uint8 *buf)")
 ●felica_getpmm (f,{参照渡し}buf) =DLL("felicalib.dll","void* felica_getpmm (felica *f, uint8 *buf)")
 ●felica_read_without_encryption02(f, servicecode, mode, addr,{参照渡し}data) =DLL("felicalib.dll","int* felica_read_without_encryption02 (felica *f, int *servicecode, int *mode, uint8 *addr, uint8 *data)")
-
 # DLLファイルとなでしこの命令をつなぎ合わせる接着剤終わり
 
 # 命令の日本語化
